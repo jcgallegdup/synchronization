@@ -10,8 +10,7 @@ You can run them thus:
 
 The tests ensure that the clocks are incremented correctly between tasks through the assumption that if the finishing state of each clock matches its expected finishing state, then the algorithm worked properly.
 
-The tests rely
-
+The purpose of test is noted below:
 * `TestNoops`: No interprocess communication takes place
 * `TestSimpleSendReceive`: Process 1 sends a message to Process 2
 * `TestMultipleSend`: Process 2 waits on a message from Process 1, which in turn waits on a message from Process 0
