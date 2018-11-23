@@ -87,17 +87,18 @@ func TestComplexScenario(t *testing.T) {
 	sendTo2 := objs.NewTask(objs.Send, 2)
 	recvFrom0 := objs.NewTask(objs.Receive, 0)
 	recvFrom1 := objs.NewTask(objs.Receive, 1)
+	recvFrom2 := objs.NewTask(objs.Receive, 2)
 
 	tasksByProcessID := map[int][]objs.Task{
-		0: []objs.Task{sendTo1, noop, recvFrom1, sendTo2},
+		0: []objs.Task{sendTo1, noop, recvFrom1, sendTo2, recvFrom2},
 		1: []objs.Task{noop, sendTo2, recvFrom0, sendTo0},
-		2: []objs.Task{recvFrom1, recvFrom0, noop, noop},
+		2: []objs.Task{recvFrom1, recvFrom0, noop, noop, sendTo0},
 	}
 
 	expectedClocks := map[int]objs.VectorClock{
-		0: objs.SetNewVectorClock([]int{4, 4, 0}),
+		0: objs.SetNewVectorClock([]int{5, 4, 5}),
 		1: objs.SetNewVectorClock([]int{1, 4, 0}),
-		2: objs.SetNewVectorClock([]int{4, 4, 4}),
+		2: objs.SetNewVectorClock([]int{4, 4, 5}),
 	}
 
 	runProcessesAndCompareEndingClockStates(tasksByProcessID, expectedClocks, t)
